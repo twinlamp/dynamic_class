@@ -4,9 +4,9 @@ apis.each do |api|
   klass = Class.new(api['parent_class'].constantize) do
     define_singleton_method :run do
       times_retried = 0
-      byebug
       begin
-        resp = HTTParty.get(api['url'], timeout: api['max_timeout'])&.parsed_response
+        resp = HTTParty.get(api['url'], timeout: api['max_timeout'])
+        json = JSON.parse(resp.response.body) if resp
       rescue Net::ReadTimeout => error
         if times_retried < api['max_retries']
           times_retried += 1
@@ -17,10 +17,10 @@ apis.each do |api|
           next
         end
       end
-      if resp
+      if json
         instance = api['parent_class'].constantize.new
-        api['parameter_map'].each do |k,v|
-          instance.send("#{v}=", resp[k])
+        api['parameter_map'].each do |k, v|
+          instance.send("#{v}=", json[k])
         end
         instance.save
       end
