@@ -1,0 +1,32 @@
+- id: 1
+  name: Foo
+  api_class: FooApi
+  parent_class: MyParentApi
+  url: http://foo.com/v0/data.json
+  max_retries: 5
+  max_timeout: 20
+  parameter_map:
+    abc: internal_param1
+    efg: internal_param2
+ 
+- id: 2
+  name: Foo2
+  api_class: Foo2Api
+  parent_class: MyParentApi
+  url: http://foo2.com/v2/data.json
+  max_retries: 10
+  max_timeout: 20
+  parameter_map:
+    hik: internal_param1
+    lmn: internal_param2
+
+- id: 3
+  name: Foo3
+  api_class: Foo3Api
+  parent_class: MyParentApi
+  url: http://foo3.com/v1/data.json
+  max_retries: 10
+  max_timeout: 30
+  parameter_map:
+    opq: internal_param1
+    rst: internal_param2
